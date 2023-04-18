@@ -34,11 +34,11 @@ public class RentController {
     }
 
     @PutMapping("/user{userId}/book{bookId}")
-    public String rentingBook(@PathVariable(value="userId") Long userId,@PathVariable(value="bookId") Long bookId) throws ResourceNotFoundException {
+    public String rentingBook(@PathVariable(value="userId") Long userId,@PathVariable(value="bookId") Long bookId)
+            throws ResourceNotFoundException {
         User user = userRepository.findById(userId).orElseThrow(()->new ResourceNotFoundException("User Id not Found"));
         UserStatusUpdate.updateUserInfo(user,userRepository,bookRepository);
-        RentService.rentingBook(user,bookRepository, bookId);
-        return"";
+        return RentService.rentingBook(user,bookRepository, bookId);
     }
 
 

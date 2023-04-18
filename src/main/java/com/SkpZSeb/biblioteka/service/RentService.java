@@ -8,14 +8,17 @@ import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
+
 @Getter
 public class RentService {
     final static int RENTING_PERIOD = 14;
 
     public static List<Book> allRentedBooksByUser(Long userId, BookRepository bookRepository){
-        List<Book> rentedBooks = (List<Book>) bookRepository.findAll().stream()
-                .filter(b -> b.getUser().getId() == userId);
-        return rentedBooks;
+        return bookRepository.findAll().stream()
+                .filter(b ->  b.getUser()!=null)
+                .filter(b ->  b.getUser().getId().equals(userId))
+                .collect(Collectors.toList());
     }
 
     public static String rentingBook(User user, BookRepository bookRepository,Long bookID){

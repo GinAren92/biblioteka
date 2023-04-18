@@ -15,15 +15,17 @@ public class UserStatusUpdate {
         List<Book> rentedBooks = RentService.allRentedBooksByUser(user.getId(), bookRepository);
         int newPoints = penaltyPointsCalc(rentedBooks);
         if(newPoints>0) {
+            int actualPoints;
             user.setDateLastPoints(LocalDateTime.now());
-            int actualPoints = user.getPenaltyPoints();
+            if(user.getPenaltyPoints() == null) actualPoints = 0;
+            else actualPoints = user.getPenaltyPoints();
             int updatedPoints = newPoints+actualPoints;
             if(updatedPoints>10){
                 int tmp = updatedPoints/10;
-                tmp = tmp*30;
-                LocalDateTime banDateExpired = LocalDateTime.now().plusDays(tmp);
+                LocalDateTime banDateExpired = LocalDateTime.now().plusMonths(tmp);
                 user.setBanExpired(banDateExpired);
                 updatedPoints -=tmp*10;
+                user.setPenaltyPoints(updatedPoints);
                 userRepository.save(user);
             }
         }
