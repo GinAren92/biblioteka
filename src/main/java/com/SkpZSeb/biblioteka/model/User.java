@@ -8,6 +8,10 @@ import lombok.Setter;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
+import javax.validation.constraints.NotNull;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -18,31 +22,24 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    @Column(name = "user_id", nullable = false)
     private Long id;
 
+    @NotNull
     @Column(name = "first_name", nullable = false)
-    @JdbcTypeCode(SqlTypes.VARCHAR)
     private String firstName;
 
+    @NotNull
     @Column(name = "last_name", nullable = false)
-    @JdbcTypeCode(SqlTypes.CHAR)
     private String lastName;
 
     @Column(name = "penalty_points")
-    @JdbcTypeCode(SqlTypes.INTEGER)
-    private String penaltyPoints;
+    private Integer penaltyPoints;
 
     @Column(name = "date_last_points")
-    @JdbcTypeCode(SqlTypes.TIMESTAMP)
-    private String dateLastPoints;
+    private LocalDateTime dateLastPoints;
 
     @Column(name = "ban_expired")
-    @JdbcTypeCode(SqlTypes.TIMESTAMP)
-    private String banExpired;
-
-    public String getFirstName() {
-        return firstName;
-    }
+    private LocalDateTime banExpired;
 
 }

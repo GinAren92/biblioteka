@@ -1,12 +1,13 @@
 package com.SkpZSeb.biblioteka.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
+
+import javax.validation.constraints.NotNull;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -15,22 +16,21 @@ import org.hibernate.type.SqlTypes;
 @Entity
 @Table(name = "books")
 public class Book {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    @JdbcTypeCode(SqlTypes.LONG32VARCHAR)
+    @Column(name = "book_id", nullable = false)
     private Long id;
 
+    @NotNull
     @Column(name = "title", nullable = false)
-    @JdbcTypeCode(SqlTypes.VARCHAR)
     private String title;
 
     @Column(name = "rent_date")
-    @JdbcTypeCode(SqlTypes.TIMESTAMP)
-    private String rentDate;
+    private LocalDateTime rentDate;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "user_id")
     private User user;
 
 }
