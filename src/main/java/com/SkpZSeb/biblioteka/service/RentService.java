@@ -24,6 +24,7 @@ public class RentService {
     public static String rentingBook(User user, BookRepository bookRepository,Long bookID){
         if(user.getBanExpired() == null){
             Book book = bookRepository.findById(bookID).orElseThrow(()->new ResourceNotFoundException("Book id does`t exist."));
+
             if(book.getUser() == null) {
                 book.setRentDate(LocalDateTime.now());
                 book.setUser(user);
