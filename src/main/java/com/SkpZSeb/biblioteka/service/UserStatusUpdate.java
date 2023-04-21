@@ -37,8 +37,16 @@ public class UserStatusUpdate {
                 }
 
             } else PenaltyPointReset.resetCheck(user, userRepository);
+            banExpired(user,userRepository);
     }
 
+    private static boolean banExpired(User user, UserRepository userRepository){
+        if(user.getBanExpired()!=null && user.getBanExpired().toLocalDate().isBefore(LocalDate.now())){
+            user.setBanExpired(null);
+            userRepository.save(user);
+            return true;
+        }else return false;
+    }
 
     public static int penaltyPointsCalc(List<Book> rentedBooks, User user){
         int points = 0;
