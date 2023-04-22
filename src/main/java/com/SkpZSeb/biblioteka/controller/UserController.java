@@ -2,6 +2,7 @@ package com.SkpZSeb.biblioteka.controller;
 
 import com.SkpZSeb.biblioteka.model.User;
 import com.SkpZSeb.biblioteka.repository.UserRepository;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -27,8 +28,8 @@ public class UserController {
         return userRepository.save(user);
     }
 
-    @GetMapping("/hello")
-    public String hello(){
-        return "Hello";
+    @DeleteMapping("/delete{id}")
+    public ResponseEntity<String> deleteUserById(@PathVariable Long id){
+
     }
 }

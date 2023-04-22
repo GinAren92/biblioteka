@@ -14,7 +14,8 @@ public class UserStatusUpdate {
 
     public static void updateUserInfo(User user, UserRepository userRepository, BookRepository bookRepository){
             int newPoints = 0;
-            List<Book> rentedBooks = RentService.allRentedBooksByUser(user.getId(), bookRepository);
+            RentService rentService = new RentService();
+            List<Book> rentedBooks = rentService.allRentedBooksByUser(user.getId(), bookRepository);
 
                 newPoints = penaltyPointsCalc(rentedBooks, user);
 

@@ -1,7 +1,7 @@
 package com.SkpZSeb.biblioteka.controller;
 
 
-import com.SkpZSeb.biblioteka.libExceptions.ResourceNotFoundException;
+import com.SkpZSeb.biblioteka.libExceptions.UserNotFoundLibException;
 import com.SkpZSeb.biblioteka.model.Book;
 import com.SkpZSeb.biblioteka.model.User;
 import com.SkpZSeb.biblioteka.repository.BookRepository;
@@ -25,18 +25,18 @@ public class RentController {
     }
 
     @GetMapping("/user{userId}")
-    public List<Book> getAllRentedBooks(@PathVariable(value = "userId") Long userId) throws ResourceNotFoundException {
+    public List<Book> getAllRentedBooks(@PathVariable(value = "userId") Long userId) throws UserNotFoundLibException {
         if(UserStatusUpdate.validUserId(userId,userRepository)){
-            User user = userRepository.findById(userId).orElseThrow(()->new ResourceNotFoundException("User Id not Found"));
+            User user = userRepository.findById(userId).orElseThrow(()->new UserNotFoundLibException("User Id not Found"));
             UserStatusUpdate.updateUserInfo(user,userRepository,bookRepository);
             return RentService.allRentedBooksByUser(userId, bookRepository);
-        }else throw new ResourceNotFoundException("User Id not Found");
+        }else throw new UserNotFoundLibException("User Id not Found");
     }
 
     @PutMapping("/user{userId}/book{bookId}")
     public String rentingBook(@PathVariable(value="userId") Long userId,@PathVariable(value="bookId") Long bookId)
-            throws ResourceNotFoundException {
-        User user = userRepository.findById(userId).orElseThrow(()->new ResourceNotFoundException("User Id not Found"));
+            throws UserNotFoundLibException {
+        User user = userRepository.findById(userId).orElseThrow(()->new UserNotFoundLibException("User Id not Found"));
         UserStatusUpdate.updateUserInfo(user,userRepository,bookRepository);
         return RentService.rentingBook(user,bookRepository, bookId);
     }

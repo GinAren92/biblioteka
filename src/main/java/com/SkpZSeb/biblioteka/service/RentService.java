@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 public class RentService {
     final static int RENTING_PERIOD = 14;
 
-    public static List<Book> allRentedBooksByUser(Long userId, BookRepository bookRepository){
+    public List<Book> allRentedBooksByUser(Long userId, BookRepository bookRepository){
         return bookRepository.findAll().stream()
                 .filter(b ->  b.getUser()!=null)
                 .filter(b ->  b.getUser().getId().equals(userId))

@@ -1,12 +1,8 @@
 package com.SkpZSeb.biblioteka.controller;
 
-import com.SkpZSeb.biblioteka.libExceptions.ResourceNotFoundException;
-import com.SkpZSeb.biblioteka.model.Book;
-import com.SkpZSeb.biblioteka.model.User;
 import com.SkpZSeb.biblioteka.repository.BookRepository;
 import com.SkpZSeb.biblioteka.repository.UserRepository;
 import com.SkpZSeb.biblioteka.service.ReturnBook;
-import com.SkpZSeb.biblioteka.service.UserStatusUpdate;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
