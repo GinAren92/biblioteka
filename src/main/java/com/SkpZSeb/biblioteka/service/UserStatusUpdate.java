@@ -1,21 +1,28 @@
 package com.SkpZSeb.biblioteka.service;
 
 import com.SkpZSeb.biblioteka.model.Book;
+import com.SkpZSeb.biblioteka.model.BookingRecord;
 import com.SkpZSeb.biblioteka.model.User;
 import com.SkpZSeb.biblioteka.repository.BookRepository;
 import com.SkpZSeb.biblioteka.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
 import java.util.List;
 
+@Service
+@RequiredArgsConstructor
 public class UserStatusUpdate {
 
-    public static void updateUserInfo(User user, UserRepository userRepository, BookRepository bookRepository){
+    private final PenaltyPointReset penaltyPointReset;
+    private final RentService rentService;
+
+    public void updateUserInfo(User user, UserService userService, BookService bookService){
             int newPoints = 0;
-            RentService rentService = new RentService();
-            List<Book> rentedBooks = rentService.allRentedBooksByUser(user.getId(), bookRepository);
+            List<BookingRecord> rentedBooks = rentService.allRentedBooksByUser(user);
 
                 newPoints = penaltyPointsCalc(rentedBooks, user);
 
@@ -34,28 +41,28 @@ public class UserStatusUpdate {
                     user.setBanExpired(banDateExpired);
                     updatedPoints -= tmp * 10;
                     user.setPenaltyPoints(updatedPoints);
-                    userRepository.save(user);
+                    userService.save(user);
                 }
 
-            } else PenaltyPointReset.resetCheck(user, userRepository);
-            banExpired(user,userRepository);
+            } else penaltyPointReset.resetCheck(user, userService);
+            banExpired(user,userService);
     }
 
-    private static boolean banExpired(User user, UserRepository userRepository){
+    private boolean banExpired(User user, UserService userService){
         if(user.getBanExpired()!=null && user.getBanExpired().toLocalDate().isBefore(LocalDate.now())){
             user.setBanExpired(null);
-            userRepository.save(user);
+            userService.save(user);
             return true;
         }else return false;
     }
 
-    public static int penaltyPointsCalc(List<Book> rentedBooks, User user){
+    public int penaltyPointsCalc(List<BookingRecord> rentedBooks, User user){
         int points = 0;
         Period periodB;
-            for (Book book :
+            for (BookingRecord bookingRecord :
                     rentedBooks) {
 
-                LocalDateTime rentedDate = book.getRentDate();
+                LocalDateTime rentedDate = bookingRecord.getRentDate();
                 Period periodA = Period.between(LocalDateTime.now().toLocalDate(), rentedDate.toLocalDate());
                 if(user.getDateLastPoints() != null) {
                     periodB = Period.between(user.getDateLastPoints().toLocalDate(), rentedDate.toLocalDate());
@@ -77,7 +84,5 @@ public class UserStatusUpdate {
         return points;
     }
 
-    public static boolean validUserId(Long userId, UserRepository userRepository){
-        return userRepository.existsById(userId);
-    }
+
 }

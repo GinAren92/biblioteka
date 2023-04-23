@@ -23,11 +23,14 @@ public class Book {
     @Column(name = "title", nullable = false)
     private String title;
 
-    @Column(name = "rent_date")
-    private LocalDateTime rentDate;
+    @NotNull
+    @Column(name = "Quantity", nullable = false)
+    private int quantity = 1;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id")
-    private User user;
+    @NotNull
+    @Column(name = "Avaible Quantity", nullable = false)
+    private int availableQty = 1;
+
+
 
 }

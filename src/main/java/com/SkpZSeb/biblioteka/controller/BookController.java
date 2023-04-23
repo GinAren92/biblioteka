@@ -25,16 +25,6 @@ public class BookController {
             return "Title: "+book.getTitle()+", save completed.";
 
     }
-
-    @PutMapping("/book{id}/rent-date-pass-30d")
-    public String rentDateMinus30Days(@Valid @PathVariable(value="id") Long bookId){
-        Book book = bookService.findById(bookId);
-
-        book.setRentDate(LocalDateTime.now().minusDays(30));
-        bookService.save(book);
-
-        return "Current rent date in book: "+book.getTitle()+" is: "+book.getRentDate();
-    }
     @GetMapping("/all-books")
     public List<Book> getBooks(){
         return bookService.findAll();

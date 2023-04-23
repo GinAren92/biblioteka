@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 
 public class PenaltyPointReset {
 
-    private static boolean check(User user){
+    private boolean check(User user){
         LocalDateTime now = LocalDateTime.now();
         if(user.getDateLastPoints() != null) {
             LocalDateTime resetDay = user.getDateLastPoints().plusMonths(1);
@@ -17,11 +17,11 @@ public class PenaltyPointReset {
         }else return false;
     }
 
-    public static boolean resetCheck(User user, UserRepository userRepository){
+    public boolean resetCheck(User user, UserService userService){
         if(check(user)){
             user.setPenaltyPoints(0);
             user.setDateLastPoints(null);
-            userRepository.save(user);
+            userService.save(user);
             return true;
         }
         return false;
