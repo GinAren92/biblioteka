@@ -31,6 +31,11 @@ public class UserService {
     }
 
     public String deleteUser(Long userId){
-
+        try {
+            userRepository.deleteById(userId);
+            return "User with ID: "+userId+" deleted with all records.";
+        }catch (Exception e){
+            return "Something go wrong: "+e.getStackTrace().toString();
+        }
     }
 }
