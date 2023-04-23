@@ -29,7 +29,7 @@ public class Book {
 
     @NotNull
     @Column(name = "Avaible Quantity", nullable = false)
-    private int availableQty = 1;
+    private int availableQty = quantity;
 
 
 

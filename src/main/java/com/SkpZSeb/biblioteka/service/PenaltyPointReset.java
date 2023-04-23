@@ -2,10 +2,11 @@ package com.SkpZSeb.biblioteka.service;
 
 import com.SkpZSeb.biblioteka.model.User;
 import com.SkpZSeb.biblioteka.repository.UserRepository;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 
-
+@Service
 public class PenaltyPointReset {
 
     private boolean check(User user){

@@ -41,7 +41,7 @@ public class BookingRecord {
         private LocalDateTime rentDate;
 
         @NotNull
-        @Column(name = "rent_date")
+        @Column(name = "return_date")
         private LocalDateTime returnDate;
 
 

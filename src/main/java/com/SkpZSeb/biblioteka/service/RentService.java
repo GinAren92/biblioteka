@@ -1,5 +1,6 @@
 package com.SkpZSeb.biblioteka.service;
 
+import com.SkpZSeb.biblioteka.libExceptions.BookNotFoundLibException;
 import com.SkpZSeb.biblioteka.model.Book;
 import com.SkpZSeb.biblioteka.model.BookingRecord;
 import com.SkpZSeb.biblioteka.model.User;
@@ -31,7 +32,7 @@ public class RentService {
 
     public String rentingBook(User user,Long bookID){
         if(user.getBanExpired() == null){
-            Book book = bookRepository.findById(bookID).orElseThrow(()->new ResourceNotFoundException("Book id does`t exist."));
+            Book book = bookRepository.findById(bookID).orElseThrow(()->new BookNotFoundLibException("Book id does`t exist."));
 
             if(book.getAvailableQty() > 0) {
                 BookingRecord bookingRecord = new BookingRecord();

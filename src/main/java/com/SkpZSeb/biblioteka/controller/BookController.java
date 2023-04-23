@@ -20,9 +20,8 @@ public class BookController {
 
     @PostMapping("/add-book")
     public String addBook(@Valid @RequestBody Book book){
-
-            bookService.save(book);
-            return "Title: "+book.getTitle()+", save completed.";
+        bookService.save(book);
+        return "Title: "+book.getTitle()+", save completed.";
 
     }
     @GetMapping("/all-books")

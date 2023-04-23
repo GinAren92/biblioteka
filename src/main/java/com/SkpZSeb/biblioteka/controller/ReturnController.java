@@ -20,7 +20,7 @@ public class ReturnController {
     private final BookService bookService;
     private final BookingRepo bookingRepo;
     private final ReturnBook returnBook;
-    @PutMapping("/user{userId}book{bookId}")
+    @PutMapping("/user{userId}/book{bookId}")
     public String returnBook(@Valid @PathVariable Long userId, @PathVariable Long bookId){
         return returnBook.startReturn(userId,bookId,bookService,userService,bookingRepo);
     }
