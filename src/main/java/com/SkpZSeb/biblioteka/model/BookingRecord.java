@@ -24,8 +24,7 @@ public class BookingRecord {
         @Column(name = "booking_id", nullable = false)
         private Long id;
 
-
-        @ManyToOne(cascade = CascadeType.ALL)
+        @ManyToOne()
         @JoinColumn(name = "user_id")
         private User user;
 

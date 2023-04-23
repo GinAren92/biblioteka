@@ -12,6 +12,7 @@ import org.hibernate.type.SqlTypes;
 import javax.validation.constraints.NotNull;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -25,6 +26,10 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id", nullable = false)
     private Long id;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @Column(name = "booking")
+    private List<BookingRecord> bookingList;
 
     @NotNull
     @Column(name = "first_name", nullable = false)
