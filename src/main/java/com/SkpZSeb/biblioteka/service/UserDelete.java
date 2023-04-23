@@ -11,7 +11,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserDelete {
     public String deleteById(User user, UserRepository userRepository){
-        userRepository.deleteById(user.getId());
+        userRepository.delete(user);
         return "";
     }
 

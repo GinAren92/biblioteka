@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
@@ -23,7 +24,7 @@ public class BookingRecord {
         @Column(name = "booking_id", nullable = false)
         private Long id;
 
-        @NotNull
+
         @ManyToOne(cascade = CascadeType.ALL)
         @JoinColumn(name = "user_id")
         private User user;

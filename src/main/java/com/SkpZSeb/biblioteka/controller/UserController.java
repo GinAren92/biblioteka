@@ -29,7 +29,7 @@ public class UserController {
         return userService.save(user);
     }
 
-    @DeleteMapping("/delete{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteUserById(@PathVariable Long id){
         String response = userService.deleteUser(id);
         return new ResponseEntity<>(response, HttpStatus.OK);
